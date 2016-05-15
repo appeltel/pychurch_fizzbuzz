@@ -36,11 +36,21 @@ Since writing to any output is not part of the untyped lambda calculus,
 the challenge instead becomes:
 
 > Produce a lambda abstraction that is a list of Church encoded numerals
-> [ for example the Church numeral '3' would be λf.λx.f(f(f(x))) ]
+> ( for example the Church numeral '3' would be λf.λx.f(f(f(x))) )
 > that represent unicode codepoints, which if encoded and written to
 > an output device would be a correct solution output of the traditional
 > fizzbuzz interview test. Additionally produce abstractions for
 > that produce the head and tail of the list above when applied to the list.
+
+The lambda calculus solution would thus take the form:
+
+```
+[ 49 ("1"), 10 ("\n"), 50 ("2"), 10 ("\n"), 51 ("3"), 32 (" "), 102 ("f"), ...]
+```
+
+This list along with the head and tail abstractions can then be passed to
+a python function that will interpret each Church encoded numeral and write
+the resulting characters to the screen.
 
 ## The rules
 
@@ -49,6 +59,8 @@ subset of python syntax. The following syntax allowed:
 
 1. A name `x` representing any variable that is a valid lambda term, provided
 that the name is not any python built-in function or keyword.
+  * Optional enclosing parenthesis are allowed, i.e. `(x)`, which will
+    allow expressions to continue across multiple lines.
 1. If `t` is a lambda term, and `x` is a variable, then the expression
 `lambda x: (t)` is allowed syntax for a lambda abstraction.
   * The enclosing parenthesis are optional, `lambda x: t` is also permitted.
@@ -59,9 +71,9 @@ an application.
 In addition, the following extensions are allowed for notational
 convenience and clarity:
 
-1. For any allowed name `var` and lambda abstraction `lambda x: (t)`, the
-simple assignment statement `var = lambda x: (t)` is permitted, and `var`
-may subsequently be used in place of `lambda x:(t)`.
+1. For any allowed name `var` and lambda expression `x`, the
+simple assignment statement `var = x` is permitted, and `var`
+may subsequently be used in place of `x`.
 1. Valid lambda terms may be written to a python module containing nothing
 but valid lambda terms, simple assignment statements as given above,
 empty lines, comment lines beginning with `#`, and an optional
