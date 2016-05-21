@@ -4,6 +4,8 @@ _printer_
 Non-lambda calculus python functions to print a Church
 encoded list of Church numerals.
 """
+import sys
+
 
 def unchurch(church_numeral):
     """
@@ -22,3 +24,15 @@ def unchurch_list(church_list, head=None, tail=None, isnil=None):
         py_list.append(head(church_list))
         church_list = tail(church_list)
     return py_list
+
+
+def church_print(church_list, head=None, tail=None, isnil=None):
+    """
+    Print a given church list of unicode codepoints to stdout
+    """
+    pylist = [
+        chr(unchurch(item)) for item in
+         unchurch_list(church_list, head=head, tail=tail, isnil=isnil)
+    ]
+    for character in pylist:
+        sys.stdout.write(character)
