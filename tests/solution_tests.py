@@ -50,6 +50,17 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.MINUS(lc.FOUR)(lc.FIVE)), 0)
         self.assertEqual(unchurch(lc.MINUS(lc.ZERO)(lc.ZERO)), 0)
 
+    def test_less_than_or_equal(self):
+        """
+        Test the LEQ less-than-or-equal predicate.
+        """
+        self.assertTrue(lc.LEQ(lc.FOUR)(lc.FIVE)(True)(False))
+        self.assertTrue(lc.LEQ(lc.ZERO)(lc.FIVE)(True)(False))
+        self.assertTrue(lc.LEQ(lc.ZERO)(lc.ZERO)(True)(False))
+        self.assertTrue(lc.LEQ(lc.FIVE)(lc.FIVE)(True)(False))
+        self.assertFalse(lc.LEQ(lc.TWENTY)(lc.TEN)(True)(False))
+        self.assertFalse(lc.LEQ(lc.TEN)(lc.ZERO)(True)(False))
+
     def test_booleans_and_pairs(self):
         """
         Test for TRUE, FALSE, PAIR, FIRST, SECOND

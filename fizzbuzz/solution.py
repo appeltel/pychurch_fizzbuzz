@@ -33,16 +33,18 @@ PRED = (
 )
 MINUS = lambda m: lambda n: (n)(PRED)(m) # m - n, i.e. MINUS(10)(5) = 5
 
-# booleans and pairs
+# booleans
 TRUE = lambda a: lambda b: (a)
 FALSE = lambda a: lambda b: (b)
 
+# is zero and less than or equal to predicate
+IS_ZERO = lambda n: (n)(lambda x: (FALSE))(TRUE)
+LEQ = lambda m: lambda n: (IS_ZERO)((MINUS)(m)(n)) # m <= n
+
+# pairs
 PAIR = lambda x: lambda y: lambda z: (z)(x)(y)
 FIRST = lambda p: (p)(TRUE)
 SECOND = lambda p: (p)(FALSE)
-
-# is zero predicate
-IS_ZERO = lambda n: (n)(lambda x: (FALSE))(TRUE)
 
 # list encoding using two pairs to allow empty lists
 # [ <empty list boolean>, [ head, tail ] ]
