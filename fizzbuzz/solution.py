@@ -23,7 +23,7 @@ FIFTY = (ADD)(FOURTY)(TEN)
 
 HUNDRED = (ADD)(FIFTY)(FIFTY)
 
-# predecessor function
+# predecessor function and subtraction
 PRED = (
     lambda n: lambda f: lambda x:
     (n)                                 # apply n-times
@@ -31,6 +31,7 @@ PRED = (
     (lambda u: x)                       # to special const initial container
     (lambda u: u)                       # and extract church numeral
 )
+MINUS = lambda m: lambda n: (n)(PRED)(m) # m - n, i.e. MINUS(10)(5) = 5
 
 # booleans and pairs
 TRUE = lambda a: lambda b: (a)

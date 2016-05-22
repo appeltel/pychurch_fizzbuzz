@@ -39,6 +39,17 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.PRED(lc.ONE)), 0)
         self.assertEqual(unchurch(lc.PRED(lc.ZERO)), 0)
 
+    def test_subtraction(self):
+        """
+        Test the MINUS subtraction function.
+        """
+        self.assertEqual(unchurch(lc.MINUS(lc.TEN)(lc.FIVE)), 5)
+        self.assertEqual(unchurch(lc.MINUS(lc.THIRTY)(lc.FOUR)), 26)
+        self.assertEqual(unchurch(lc.MINUS(lc.THIRTY)(lc.ZERO)), 30)
+        self.assertEqual(unchurch(lc.MINUS(lc.FIVE)(lc.FIVE)), 0)
+        self.assertEqual(unchurch(lc.MINUS(lc.FOUR)(lc.FIVE)), 0)
+        self.assertEqual(unchurch(lc.MINUS(lc.ZERO)(lc.ZERO)), 0)
+
     def test_booleans_and_pairs(self):
         """
         Test for TRUE, FALSE, PAIR, FIRST, SECOND
