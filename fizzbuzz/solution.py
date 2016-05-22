@@ -31,9 +31,6 @@ PAIR = lambda x: lambda y: lambda z: (z)(x)(y)
 FIRST = lambda p: (p)(TRUE)
 SECOND = lambda p: (p)(FALSE)
 
-# Y-combinator
-Y = lambda f: (lambda x: (f)((x)(x))) (lambda x: (f)((x)(x)))
-
 # list encoding using two pairs to allow empty lists
 # [ <empty list boolean>, [ head, tail ] ]
 EMPTY = (PAIR)(TRUE)(TRUE)
@@ -41,3 +38,6 @@ IS_EMPTY = (FIRST)
 CONS = lambda h: lambda t: (PAIR)(FALSE)((PAIR)(h)(t))
 HEAD = lambda z: (FIRST)((SECOND)(z))
 TAIL = lambda z: (SECOND)((SECOND)(z))
+
+# Y-combinator
+Y = lambda f: (lambda x: (f)((x)(x))) (lambda x: (f)((x)(x)))

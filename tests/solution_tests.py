@@ -29,3 +29,14 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(unchurch(lc.SUCC(lc.HUNDRED)), 101)
         self.assertEqual(unchurch(lc.ADD(lc.HUNDRED)(lc.HUNDRED)), 200)
+
+    def test_booleans_and_pairs(self):
+        """
+        Test for TRUE, FALSE, PAIR, FIRST, SECOND
+        """
+        self.assertTrue(lc.TRUE(True)(False))
+        self.assertFalse(lc.FALSE(True)(False))
+
+        pair = lc.PAIR(lc.ONE)(lc.TWO)
+        self.assertEqual(unchurch(lc.FIRST(pair)), 1)
+        self.assertEqual(unchurch(lc.SECOND(pair)), 2)
