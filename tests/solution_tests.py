@@ -41,6 +41,14 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.FIRST(pair)), 1)
         self.assertEqual(unchurch(lc.SECOND(pair)), 2)
 
+    def test_is_zero(self):
+        """
+        Test the IS_ZERO predicate
+        """
+        self.assertTrue(lc.IS_ZERO(lc.ZERO)(True)(False))
+        self.assertFalse(lc.IS_ZERO(lc.ONE)(True)(False))
+        self.assertFalse(lc.IS_ZERO(lc.HUNDRED)(True)(False))
+
     def test_list_construction(self):
         """
         Test CONS, EMPTY, IS_EMPTY, HEAD, TAIL

@@ -31,6 +31,9 @@ PAIR = lambda x: lambda y: lambda z: (z)(x)(y)
 FIRST = lambda p: (p)(TRUE)
 SECOND = lambda p: (p)(FALSE)
 
+# is zero predicate
+IS_ZERO = lambda n: (n)(lambda x: (FALSE))(TRUE)
+
 # list encoding using two pairs to allow empty lists
 # [ <empty list boolean>, [ head, tail ] ]
 EMPTY = (PAIR)(TRUE)(TRUE)
