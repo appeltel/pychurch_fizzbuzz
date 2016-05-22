@@ -30,6 +30,15 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.SUCC(lc.HUNDRED)), 101)
         self.assertEqual(unchurch(lc.ADD(lc.HUNDRED)(lc.HUNDRED)), 200)
 
+    def test_predecessor(self):
+        """
+        Test the PRED predecessor function.
+        """
+        self.assertEqual(unchurch(lc.PRED(lc.FIVE)), 4)
+        self.assertEqual(unchurch(lc.PRED(lc.HUNDRED)), 99)
+        self.assertEqual(unchurch(lc.PRED(lc.ONE)), 0)
+        self.assertEqual(unchurch(lc.PRED(lc.ZERO)), 0)
+
     def test_booleans_and_pairs(self):
         """
         Test for TRUE, FALSE, PAIR, FIRST, SECOND

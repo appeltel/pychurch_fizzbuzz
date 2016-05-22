@@ -23,6 +23,15 @@ FIFTY = (ADD)(FOURTY)(TEN)
 
 HUNDRED = (ADD)(FIFTY)(FIFTY)
 
+# predecessor function
+PRED = (
+    lambda n: lambda f: lambda x:
+    (n)                                 # apply n-times
+    (lambda g: lambda h: (h)((g)(f)))   # incrementor of contained function
+    (lambda u: x)                       # to special const initial container
+    (lambda u: u)                       # and extract church numeral
+)
+
 # booleans and pairs
 TRUE = lambda a: lambda b: (a)
 FALSE = lambda a: lambda b: (b)
