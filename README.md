@@ -39,8 +39,9 @@ the challenge instead becomes:
 > ( for example the Church numeral '3' would be λf.λx.f(f(f(x))) )
 > that represent unicode codepoints, which if encoded and written to
 > an output device would be a correct solution output of the traditional
-> fizzbuzz interview test. Additionally produce abstractions for
-> that produce the head and tail of the list above when applied to the list.
+> fizzbuzz interview test. Additionally produce abstractions 
+> that produce the head and tail of the list above when applied to the list,
+> as well as a predicate abstraction to determine if the list is empty.
 
 The lambda calculus solution would thus take the form:
 
@@ -73,7 +74,8 @@ convenience and clarity:
 
 1. For any allowed name `var` and lambda expression `x`, the
 simple assignment statement `var = x` is permitted, and `var`
-may subsequently be used in place of `x`.
+may subsequently be used in place of `x`. Once `var` is declared
+it may not be reassigned.
 1. Valid lambda terms may be written to a python module containing nothing
 but valid lambda terms, simple assignment statements as given above,
 empty lines, comment lines beginning with `#`, and an optional
