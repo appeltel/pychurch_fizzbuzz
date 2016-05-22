@@ -4,40 +4,40 @@ _solution_
 """
 
 # numberic zero and basic addition
-zero = lambda f: lambda x: (x)
-succ = lambda n: lambda f: lambda x: (f)((n)(f)(x))
-add = lambda a: lambda b: lambda f: lambda x: (a)(f)((b)(f)(x))
+ZERO = lambda f: lambda x: (x)
+SUCC = lambda n: lambda f: lambda x: (f)((n)(f)(x))
+ADD = lambda a: lambda b: lambda f: lambda x: (a)(f)((b)(f)(x))
 
 # convenience numerals
-one = (succ)(zero)
-two = (succ)(one)
-three = (succ)(two)
-four = (succ)(three)
-five = (succ)(four)
+ONE = (SUCC)(ZERO)
+TWO = (SUCC)(ONE)
+THREE = (SUCC)(TWO)
+FOUR = (SUCC)(THREE)
+FIVE = (SUCC)(FOUR)
 
-ten = add(five)(five)
-twenty = add(ten)(ten)
-thirty = add(twenty)(ten)
-fourty = add(thirty)(ten)
-fifty = add(fourty)(ten)
+TEN = ADD(FIVE)(FIVE)
+TWENTY = ADD(TEN)(TEN)
+THIRTY = ADD(TWENTY)(TEN)
+FOURTY = ADD(THIRTY)(TEN)
+FIFTY = ADD(FOURTY)(TEN)
 
-hundred = add(fifty)(fifty)
+HUNDRED = ADD(FIFTY)(FIFTY)
 
 # booleans and pairs
-true = lambda a: lambda b: (a)
-false = lambda a: lambda b: (b)
+TRUE = lambda a: lambda b: (a)
+FALSE = lambda a: lambda b: (b)
 
-pair = lambda x: lambda y: lambda z: (z)(x)(y)
-first = lambda p: (p)(true)
-second = lambda p: (p)(false)
+PAIR = lambda x: lambda y: lambda z: (z)(x)(y)
+FIRST = lambda p: (p)(TRUE)
+SECOND = lambda p: (p)(FALSE)
 
 # Y-combinator
 Y = lambda f: (lambda x: (f)((x)(x))) (lambda x: (f)((x)(x)))
 
 # list encoding using two pairs to allow empty lists
 # [ <empty list boolean>, [ head, tail ] ]
-empty = (pair)(true)(true)
-is_empty = (first)
-cons = lambda h: lambda t: (pair)(false)((pair)(h)(t))
-head = lambda z: (first)((second)(z))
-tail = lambda z: (second)((second)(z))
+EMPTY = (PAIR)(TRUE)(TRUE)
+IS_EMPTY = (FIRST)
+CONS = lambda h: lambda t: (PAIR)(FALSE)((PAIR)(h)(t))
+HEAD = lambda z: (FIRST)((SECOND)(z))
+TAIL = lambda z: (SECOND)((SECOND)(z))

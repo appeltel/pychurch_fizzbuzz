@@ -22,10 +22,10 @@ class TestSolution(unittest.TestCase):
         """
         Test some of the basic numerals, succ, and add functions.
         """
-        self.assertEqual(unchurch(lc.zero), 0)
-        self.assertEqual(unchurch(lc.three), 3)
-        self.assertEqual(unchurch(lc.five), 5)
-        self.assertEqual(unchurch(lc.hundred), 100)
+        self.assertEqual(unchurch(lc.ZERO), 0)
+        self.assertEqual(unchurch(lc.THREE), 3)
+        self.assertEqual(unchurch(lc.FIVE), 5)
+        self.assertEqual(unchurch(lc.HUNDRED), 100)
 
-        self.assertEqual(unchurch(lc.succ(lc.hundred)), 101)
-        self.assertEqual(unchurch(lc.add(lc.hundred)(lc.hundred)), 200)
+        self.assertEqual(unchurch(lc.SUCC(lc.HUNDRED)), 101)
+        self.assertEqual(unchurch(lc.ADD(lc.HUNDRED)(lc.HUNDRED)), 200)

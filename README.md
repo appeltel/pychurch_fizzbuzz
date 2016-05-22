@@ -72,9 +72,9 @@ an application.
 In addition, the following extensions are allowed for notational
 convenience and clarity:
 
-1. For any allowed name `var` and lambda expression `x`, the
-simple assignment statement `var = x` is permitted, and `var`
-may subsequently be used in place of `x`. Once `var` is declared
+1. For any allowed name `VAR` and lambda expression `x`, the
+simple assignment statement `VAR = x` is permitted, and `VAR`
+may subsequently be used in place of `x`. Once `VAR` is declared
 it may not be reassigned.
 1. Valid lambda terms may be written to a python module containing nothing
 but valid lambda terms, simple assignment statements as given above,
