@@ -40,3 +40,27 @@ class TestSolution(unittest.TestCase):
         pair = lc.PAIR(lc.ONE)(lc.TWO)
         self.assertEqual(unchurch(lc.FIRST(pair)), 1)
         self.assertEqual(unchurch(lc.SECOND(pair)), 2)
+
+    def test_list_construction(self):
+        """
+        Test CONS, EMPTY, IS_EMPTY, HEAD, TAIL
+        """
+        self.assertTrue(lc.IS_EMPTY(lc.EMPTY)(True)(False))
+
+        one_elem = lc.CONS(lc.ONE)(lc.EMPTY)
+        self.assertFalse(lc.IS_EMPTY(one_elem)(True)(False))
+        self.assertTrue(lc.IS_EMPTY(lc.TAIL(one_elem))(True)(False))
+        self.assertEqual(unchurch(lc.HEAD(one_elem)), 1)
+
+        two_elem = lc.CONS(lc.TWO)(one_elem)
+        three_elem = lc.CONS(lc.THREE)(two_elem)
+        pylist = unchurch_list(
+            three_elem,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in pylist],
+            [3, 2, 1]
+        )
