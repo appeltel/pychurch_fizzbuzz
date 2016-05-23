@@ -107,3 +107,61 @@ class TestSolution(unittest.TestCase):
             [unchurch(elem) for elem in pylist],
             [3, 2, 1]
         )
+
+    def test_z_combinator(self):
+        """
+        Test the Z-combinator against a python factorial
+        stepper function.
+        """
+        def F(next_step):
+            def step(n):
+                if n == 0:
+                    return 1
+                return n * next_step(n - 1)
+            return step
+
+        # ensure that the stepper function F before applying the
+        # Z-combinator
+        self.assertEqual((F(F(F(F(F(F(lambda x: x)))))))(4), 24)
+        self.assertEqual((F(F(F(F(F(F(lambda x: x)))))))(1), 1)
+
+        factorial = lc.Z(F)
+
+        self.assertEqual(factorial(5), 120)
+        self.assertEqual(factorial(3), 6)
+        self.assertEqual(factorial(1), 1)
+        self.assertEqual(factorial(0), 1)
+
+    def test_z_combinator_lambda_predicate(self):
+        """
+        Test the Z-combinator against a factorial stepper
+        function built out of a predicate and abstractions
+        from the solution implementation so far.
+
+        Note that the recursive clause of the predicate
+        requires a "thunk" - lambda z: (CLAUSE)(z) in order
+        to prevent infinite recursion due to eager evaluation
+        in python.
+        """
+        F = (
+            lambda f: lambda n: 
+            lc.IS_ZERO(n)(lc.ONE)(lambda z: lc.MULT(n)(f(lc.PRED(n)))(z))
+        )
+
+        # ensure that the stepper function F before applying the
+        # Z-combinator
+        self.assertEqual(
+            unchurch((F(F(F(F(F(F(lambda x: x)))))))(lc.FOUR)),
+            24
+        )
+        self.assertEqual(
+            unchurch((F(F(F(F(F(F(lambda x: x)))))))(lc.ONE)),
+            1
+        )
+
+        factorial = lc.Z(F)
+
+        self.assertEqual(unchurch(factorial(lc.FIVE)), 120)
+        self.assertEqual(unchurch(factorial(lc.THREE)), 6)
+        self.assertEqual(unchurch(factorial(lc.ONE)), 1)
+        self.assertEqual(unchurch(factorial(lc.ZERO)), 1)

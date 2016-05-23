@@ -55,5 +55,9 @@ CONS = lambda h: lambda t: (PAIR)(FALSE)((PAIR)(h)(t))
 HEAD = lambda z: (FIRST)((SECOND)(z))
 TAIL = lambda z: (SECOND)((SECOND)(z))
 
-# Y-combinator
-Y = lambda f: (lambda x: (f)((x)(x))) (lambda x: (f)((x)(x)))
+# Z-combinator
+Z = (
+    lambda f: 
+        (lambda x: (f)(lambda v: ((x)(x))(v)))
+        (lambda x: (f)(lambda v: ((x)(x))(v)))
+)
