@@ -7,6 +7,7 @@ _solution_
 ZERO = lambda f: lambda x: (x)
 SUCC = lambda n: lambda f: lambda x: (f)((n)(f)(x))
 ADD = lambda a: lambda b: lambda f: lambda x: (a)(f)((b)(f)(x))
+MULT = lambda a: lambda b: lambda f: (a)((b)(f))
 
 # convenience numerals
 ONE = (SUCC)(ZERO)

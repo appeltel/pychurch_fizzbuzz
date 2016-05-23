@@ -20,7 +20,7 @@ class TestSolution(unittest.TestCase):
 
     def test_basic_math(self):
         """
-        Test some of the basic numerals, succ, and add functions.
+        Test some of the basic numerals, SUCC, ADD, and MULT functions.
         """
         self.assertEqual(unchurch(lc.ZERO), 0)
         self.assertEqual(unchurch(lc.THREE), 3)
@@ -29,6 +29,10 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(unchurch(lc.SUCC(lc.HUNDRED)), 101)
         self.assertEqual(unchurch(lc.ADD(lc.HUNDRED)(lc.HUNDRED)), 200)
+
+        self.assertEqual(unchurch(lc.MULT(lc.TEN)(lc.TEN)), 100)
+        self.assertEqual(unchurch(lc.MULT(lc.ONE)(lc.TEN)), 10)
+        self.assertEqual(unchurch(lc.MULT(lc.TEN)(lc.ZERO)), 0)
 
     def test_predecessor(self):
         """
