@@ -176,3 +176,12 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.MOD(lc.ONE)(lc.FOUR)), 1)
         self.assertEqual(unchurch(lc.MOD(lc.TWENTY)(lc.TEN)), 0)
         self.assertEqual(unchurch(lc.MOD(lc.FOUR)(lc.FIVE)), 4)
+
+    def test_division(self):
+        """
+        Tests for the DIV function.
+        """
+        self.assertEqual(unchurch(lc.DIV(lc.FIVE)(lc.ONE)), 5)
+        self.assertEqual(unchurch(lc.DIV(lc.FIVE)(lc.TWO)), 2)
+        self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.FOUR)), 25)
+        self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.ONE)), 100)

@@ -57,17 +57,23 @@ TAIL = lambda z: (SECOND)((SECOND)(z))
 
 # Z-combinator
 Z = (
-    lambda f: 
+    lambda f:
         (lambda x: (f)(lambda v: ((x)(x))(v)))
         (lambda x: (f)(lambda v: ((x)(x))(v)))
 )
 
-# Modular arithmetic
-#  Start with a stepper function accepts a pair p of numerals
+# Modular arithmetic and division
+#
+# For some reason I can't get the Z combinator to work properly
+# with a Curried function of multiple variables, so I will
+# use pairs as arguments for the combinated function, and then
+# wrap it in a Curried function
+
+#  Mod - Start with a stepper function accepts a pair p of numerals
 PMOD_STEP = (
     lambda f: lambda p:
-    (LEQ) 
-        ((FIRST)(p)) 
+    (LEQ)
+        ((FIRST)(p))
         ((PRED)((SECOND)(p)))
         ((FIRST)(p))
         (lambda z: (f)(
@@ -75,6 +81,30 @@ PMOD_STEP = (
         )(z))
 )
 # apply the Z-combinator for a recursive mod function taking a pair
-PMOD = (Z)(PMOD_STEP) # (PMOD)((PAIR)(m)(n)) --> m % n
+PMOD = (Z)(PMOD_STEP)
 # finally, MOD takes two arguments and calls PMOD with the pair
-MOD = lambda m: lambda n: (PMOD)((PAIR)(m)(n))
+MOD = lambda m: lambda n: (PMOD)((PAIR)(m)(n)) # (MOD)(m)(n) --> m % n
+
+# Div - use a pair of pairs
+# (note the dividend is the initial remainder)
+# [ quotient (q), [divisor (d), remainder (r)] ]
+PDIV_STEP = (
+    lambda f: lambda p:
+    (LEQ)
+        ((SECOND)((SECOND)(p)))             # if r <= d - 1
+        ((PRED)((FIRST)((SECOND)(p))))
+        ((FIRST)(p))                        # then q
+        (lambda z: f(
+            (PAIR)                          # else recurse with a new pair
+                ((SUCC)((FIRST)(p)))        # [ q+1, [d, r-d] ]
+                ((PAIR)
+                    ((FIRST)((SECOND)(p)))
+                    ((MINUS)
+                        ((SECOND)((SECOND)(p)))
+                        ((FIRST)((SECOND)(p)))
+                    )
+                )
+        )(z))
+)
+PDIV = (Z)(PDIV_STEP)
+DIV = lambda m: lambda n: PDIV((PAIR)(ZERO)((PAIR)(n)(m))) # m/n
