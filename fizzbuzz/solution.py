@@ -61,3 +61,20 @@ Z = (
         (lambda x: (f)(lambda v: ((x)(x))(v)))
         (lambda x: (f)(lambda v: ((x)(x))(v)))
 )
+
+# Modular arithmetic
+#  Start with a stepper function accepts a pair p of numerals
+PMOD_STEP = (
+    lambda f: lambda p:
+    (LEQ) 
+        ((FIRST)(p)) 
+        ((PRED)((SECOND)(p)))
+        ((FIRST)(p))
+        (lambda z: (f)(
+            (PAIR) ((MINUS)((FIRST)(p))((SECOND)(p))) ((SECOND)(p))
+        )(z))
+)
+# apply the Z-combinator for a recursive mod function taking a pair
+PMOD = (Z)(PMOD_STEP) # (PMOD)((PAIR)(m)(n)) --> m % n
+# finally, MOD takes two arguments and calls PMOD with the pair
+MOD = lambda m: lambda n: (PMOD)((PAIR)(m)(n))

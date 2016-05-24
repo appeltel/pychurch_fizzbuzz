@@ -165,3 +165,14 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(factorial(lc.THREE)), 6)
         self.assertEqual(unchurch(factorial(lc.ONE)), 1)
         self.assertEqual(unchurch(factorial(lc.ZERO)), 1)
+
+    def test_modular_arithmetic(self):
+        """
+        Tests for the MOD function.
+        """
+        self.assertEqual(unchurch(lc.MOD(lc.FIVE)(lc.THREE)), 2)
+        self.assertEqual(unchurch(lc.MOD(lc.TWO)(lc.TWO)), 0)
+        self.assertEqual(unchurch(lc.MOD(lc.THIRTY)(lc.FOUR)), 2)
+        self.assertEqual(unchurch(lc.MOD(lc.ONE)(lc.FOUR)), 1)
+        self.assertEqual(unchurch(lc.MOD(lc.TWENTY)(lc.TEN)), 0)
+        self.assertEqual(unchurch(lc.MOD(lc.FOUR)(lc.FIVE)), 4)
