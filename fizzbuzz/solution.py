@@ -80,9 +80,7 @@ PMOD_STEP = (
             (PAIR) ((MINUS)((FIRST)(p))((SECOND)(p))) ((SECOND)(p))
         )(z))
 )
-# apply the Z-combinator for a recursive mod function taking a pair
 PMOD = (Z)(PMOD_STEP)
-# finally, MOD takes two arguments and calls PMOD with the pair
 MOD = lambda m: lambda n: (PMOD)((PAIR)(m)(n)) # (MOD)(m)(n) --> m % n
 
 # Div - use a pair of pairs
@@ -107,4 +105,4 @@ PDIV_STEP = (
         )(z))
 )
 PDIV = (Z)(PDIV_STEP)
-DIV = lambda m: lambda n: PDIV((PAIR)(ZERO)((PAIR)(n)(m))) # m/n
+DIV = lambda m: lambda n: (PDIV)((PAIR)(ZERO)((PAIR)(n)(m))) # m/n
