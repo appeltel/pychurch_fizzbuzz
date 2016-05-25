@@ -6,6 +6,7 @@ lambda abstractions behave correctly using the printer
 module, which has its own independent testing to
 ensure correctness.
 """
+from functools import partial
 import unittest
 
 import fizzbuzz.solution as lc
@@ -185,3 +186,27 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.DIV(lc.FIVE)(lc.TWO)), 2)
         self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.FOUR)), 25)
         self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.ONE)), 100)
+
+    def test_integer_to_string(self):
+        """
+        Tests for the INT_TO_STR function.
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+
+        forty_two = lc.ADD(lc.FORTY)(lc.TWO)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.INT_TO_STR(forty_two))],
+            [ord('4'), ord('2')]
+        )
+
+        one_thirty_five = lc.ADD(lc.HUNDRED)(lc.ADD(lc.THIRTY)(lc.FIVE))
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.INT_TO_STR(one_thirty_five))],
+            [ord('1'), ord('3'), ord('5')]
+        )
+        

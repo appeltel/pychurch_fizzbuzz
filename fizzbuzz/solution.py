@@ -19,8 +19,8 @@ FIVE = (SUCC)(FOUR)
 TEN = (ADD)(FIVE)(FIVE)
 TWENTY = (ADD)(TEN)(TEN)
 THIRTY = (ADD)(TWENTY)(TEN)
-FOURTY = (ADD)(THIRTY)(TEN)
-FIFTY = (ADD)(FOURTY)(TEN)
+FORTY = (ADD)(THIRTY)(TEN)
+FIFTY = (ADD)(FORTY)(TEN)
 
 HUNDRED = (ADD)(FIFTY)(FIFTY)
 
@@ -92,7 +92,7 @@ PDIV_STEP = (
         ((SECOND)((SECOND)(p)))             # if r <= d - 1
         ((PRED)((FIRST)((SECOND)(p))))
         ((FIRST)(p))                        # then q
-        (lambda z: f(
+        (lambda z: (f)(
             (PAIR)                          # else recurse with a new pair
                 ((SUCC)((FIRST)(p)))        # [ q+1, [d, r-d] ]
                 ((PAIR)
@@ -106,3 +106,28 @@ PDIV_STEP = (
 )
 PDIV = (Z)(PDIV_STEP)
 DIV = lambda m: lambda n: (PDIV)((PAIR)(ZERO)((PAIR)(n)(m))) # m/n
+
+# Unicode character numerals
+CH_ZERO = (ADD) (FORTY) ((ADD)(FIVE)(THREE))
+
+# Convert church numberals to "string" or list of unicode codepoints
+# representing each numeral. Note this doesn't work for zero:
+# INT_TO_STR(132) --> ["1", "3", "2"]
+
+# Step function accepts a pair [number, string] and 
+# returns [ number / 10, "number % 10" + string ]
+P_INT_TO_STR_STEP = ( lambda f: lambda p:
+    (IS_ZERO)
+        ((FIRST)(p))
+        ((SECOND)(p))
+        (lambda z: (f)(
+            (PAIR)
+                ((DIV) ((FIRST)(p)) (TEN))
+                ((CONS) 
+                    ((ADD) ((MOD)((FIRST)(p))(TEN)) (CH_ZERO))
+                    ((SECOND)(p))
+                )
+        )(z))
+)
+P_INT_TO_STR = (Z)(P_INT_TO_STR_STEP)
+INT_TO_STR = lambda n: (P_INT_TO_STR)((PAIR)(n)(EMPTY))
