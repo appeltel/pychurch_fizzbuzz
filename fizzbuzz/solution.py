@@ -148,41 +148,6 @@ P_INT_TO_STR_STEP = ( lambda f: lambda p:
 P_INT_TO_STR = (Z)(P_INT_TO_STR_STEP)
 INT_TO_STR = lambda n: (P_INT_TO_STR)((PAIR)(n)(EMPTY))
 
-# string literals for 'fizz' and 'buzz'
-FIZZ = (
-    (CONS)
-        (CH_F)
-        ((CONS)
-            (CH_I)
-            ((CONS)
-                (CH_Z)
-                ((CONS)
-                    (CH_Z)
-                    (EMPTY)
-                )
-            )
-        )
-)
-BUZZ = (
-    (CONS)
-        (CH_B)
-        ((CONS)
-            (CH_U)
-            ((CONS)
-                (CH_Z)
-                ((CONS)
-                    (CH_Z)
-                    (EMPTY)
-                )
-            )
-        )
-)
-
-# TRY_FIZZ(BUZZ) - takes a number and returns a list [F,I,Z,Z] ([B,U,Z,Z])
-# if divisible by 3(5), or an empty list otherwise.
-TRY_FIZZ = lambda n: ((IS_ZERO) ((MOD)(n)(THREE)) (FIZZ) (EMPTY))
-TRY_BUZZ = lambda n: ((IS_ZERO) ((MOD)(n)(FIVE)) (BUZZ) (EMPTY))
-
 # Reverse a list
 #
 # Stepper function will accept a pair of lists [ forward, reverse ]
@@ -229,3 +194,45 @@ P_REV_APPEND_STEP = lambda f: lambda p: (
 )
 P_REV_APPEND = (Z)(P_REV_APPEND_STEP)
 APPEND = lambda a: lambda b: (P_REV_APPEND) ((PAIR) ((REVERSE)(a)) (b))
+
+# At this point I've constructed a sufficient programming language
+# using Church encodings to start working on the specifics of fizzbuzz
+#
+# -------------------------------------------------------------------
+#
+# Fizzbuzz time!
+
+# string literals for 'fizz' and 'buzz'
+FIZZ = (
+    (CONS)
+        (CH_F)
+        ((CONS)
+            (CH_I)
+            ((CONS)
+                (CH_Z)
+                ((CONS)
+                    (CH_Z)
+                    (EMPTY)
+                )
+            )
+        )
+)
+BUZZ = (
+    (CONS)
+        (CH_B)
+        ((CONS)
+            (CH_U)
+            ((CONS)
+                (CH_Z)
+                ((CONS)
+                    (CH_Z)
+                    (EMPTY)
+                )
+            )
+        )
+)
+
+# TRY_FIZZ(BUZZ) - takes a number and returns a list [F,I,Z,Z] ([B,U,Z,Z])
+# if divisible by 3(5), or an empty list otherwise.
+TRY_FIZZ = lambda n: ((IS_ZERO) ((MOD)(n)(THREE)) (FIZZ) (EMPTY))
+TRY_BUZZ = lambda n: ((IS_ZERO) ((MOD)(n)(FIVE)) (BUZZ) (EMPTY))
