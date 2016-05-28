@@ -178,6 +178,11 @@ BUZZ = (
         )
 )
 
+# TRY_FIZZ(BUZZ) - takes a number and returns a list [F,I,Z,Z] ([B,U,Z,Z])
+# if divisible by 3(5), or an empty list otherwise.
+TRY_FIZZ = lambda n: ((IS_ZERO) ((MOD)(n)(THREE)) (FIZZ) (EMPTY))
+TRY_BUZZ = lambda n: ((IS_ZERO) ((MOD)(n)(FIVE)) (BUZZ) (EMPTY))
+
 # Reverse a list
 #
 # Stepper function will accept a pair of lists [ forward, reverse ]

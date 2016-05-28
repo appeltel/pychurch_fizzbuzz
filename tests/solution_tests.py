@@ -242,6 +242,50 @@ class TestSolution(unittest.TestCase):
             [ord(ch) for ch in 'BUZZ']
         )
 
+    def test_try_fizz_and_buzz(self):
+        """
+        Test the TRY_FIZZ and TRY_BUZZ functions
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.THIRTY))],
+            [ord(ch) for ch in 'FIZZ']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.THIRTY))],
+            [ord(ch) for ch in 'BUZZ']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.TWENTY))],
+            []
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.TWENTY))],
+            [ord(ch) for ch in 'BUZZ']
+        )
+        NINE = lc.ADD(lc.FOUR)(lc.FIVE) 
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(NINE))],
+            [ord(ch) for ch in 'FIZZ']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(NINE))],
+            []
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.TWO))],
+            []
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.TWO))],
+            []
+        )
+
     def test_list_reverse(self):
         """
         Test the REVERSE function
@@ -297,4 +341,3 @@ class TestSolution(unittest.TestCase):
             [unchurch(elem) for elem in to_pylist(nil)],
             []
         )
-        
