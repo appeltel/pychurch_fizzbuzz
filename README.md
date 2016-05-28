@@ -2,7 +2,7 @@
 
 Copyright Eric Appelt, 2016, All Rights Reserved
 
-Eventual link to travis tests
+[![Travs-CI status](https://travis-ci.org/appeltel/pychurch_fizzbuzz.png)](https://travis-ci.org/appeltel/pychurch_fizzbuzz)
 
 ## The challenge
 
