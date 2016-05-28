@@ -241,3 +241,29 @@ class TestSolution(unittest.TestCase):
             [unchurch(elem) for elem in to_pylist(lc.BUZZ)],
             [ord(ch) for ch in 'BUZZ']
         )
+
+    def test_list_reverse(self):
+        """
+        Test the REVERSE function
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        ZZIF = lc.REVERSE(lc.FIZZ)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(ZZIF)],
+            [ord(ch) for ch in 'ZZIF']
+        )
+        Z = (lc.CONS)(lc.CH_Z)(lc.EMPTY)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.REVERSE(Z))],
+            [ord('Z')]
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.REVERSE(lc.EMPTY))],
+            []
+        )
+

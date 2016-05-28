@@ -168,3 +168,27 @@ BUZZ = (
             )
         )
 )
+
+# Reverse a list
+#
+# Stepper function will accept a pair of lists [ forward, reverse ]
+# and return a new pair [ (TAIL)(forward), (CONS) ((HEAD)(forward)) (reverse) ]
+# or just reverse if forward is empty
+P_REVERSE_STEP = (lambda f: lambda p:
+    ((IS_EMPTY)
+        ((FIRST)(p))
+        ((SECOND)(p))
+        (lambda z: (f)(
+            ((PAIR)
+                ((TAIL) ((FIRST)(p)))
+                ((CONS)
+                    ((HEAD) ((FIRST)(p)))
+                    ((SECOND)(p))
+                )
+            )
+        )(z))
+    )
+)
+P_REVERSE = (Z)(P_REVERSE_STEP)
+REVERSE = lambda l: (P_REVERSE)((PAIR)(l)(EMPTY))
+
