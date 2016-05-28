@@ -187,6 +187,18 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.FOUR)), 25)
         self.assertEqual(unchurch(lc.DIV(lc.HUNDRED)(lc.ONE)), 100)
 
+    def test_unicode_chars(self):
+        """
+        Test that the unicode codepoints are correct
+        """
+        self.assertEqual(unchurch(lc.CH_NEWLINE), ord('\n'))
+        self.assertEqual(unchurch(lc.CH_SPACE), ord(' '))
+        self.assertEqual(unchurch(lc.CH_ZERO), ord('0'))
+        self.assertEqual(unchurch(lc.CH_B), ord('B'))
+        self.assertEqual(unchurch(lc.CH_F), ord('F'))
+        self.assertEqual(unchurch(lc.CH_I), ord('I'))
+        self.assertEqual(unchurch(lc.CH_Z), ord('Z'))
+
     def test_integer_to_string(self):
         """
         Tests for the INT_TO_STR function.

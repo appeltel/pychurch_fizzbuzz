@@ -107,8 +107,14 @@ PDIV_STEP = (
 PDIV = (Z)(PDIV_STEP)
 DIV = lambda m: lambda n: (PDIV)((PAIR)(ZERO)((PAIR)(n)(m))) # m/n
 
-# Unicode character numerals
+# Unicode characters (church numerals representing codepoints)
+CH_NEWLINE = (TEN)
+CH_SPACE = (ADD)(THIRTY)(TWO)
 CH_ZERO = (ADD) (FORTY) ((ADD)(FIVE)(THREE))
+CH_B = (ADD) ((ADD)(TEN)(FIFTY)) ((ADD)(ONE)(FIVE))
+CH_F = (ADD)(CH_B)(FOUR)
+CH_I = (ADD)(CH_F)(THREE)
+CH_Z = (ADD)(FORTY)(FIFTY)
 
 # Convert church numberals to "string" or list of unicode codepoints
 # representing each numeral. Note this doesn't work for zero:
