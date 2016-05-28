@@ -1,6 +1,15 @@
 """
 _solution_
 
+(When completed...) This module defines the lambda abstraction
+FIZZBUZZ which is a list of church encoded numerals each
+representing a unicode codepoint which if interpreted and
+printed to a device would present the solution to the
+classic FIZZBUZZ problem.
+
+In addition, HEAD, TAIL, and IS_EMPTY abstractions are defined
+that will allow extraction of the codepoints from FIZZBUZZ by
+an appropriate printing procedure.
 """
 
 # numberic zero and basic addition
@@ -191,4 +200,3 @@ P_REVERSE_STEP = (lambda f: lambda p:
 )
 P_REVERSE = (Z)(P_REVERSE_STEP)
 REVERSE = lambda l: (P_REVERSE)((PAIR)(l)(EMPTY))
-
