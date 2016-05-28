@@ -267,3 +267,34 @@ class TestSolution(unittest.TestCase):
             []
         )
 
+    def test_list_append(self):
+        """
+        Test the APPEND function
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        FB = (lc.APPEND)(lc.FIZZ)(lc.BUZZ)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(FB)],
+            [ord(ch) for ch in 'FIZZBUZZ']
+        )
+        F = (lc.APPEND)(lc.FIZZ)(lc.EMPTY)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(F)],
+            [ord(ch) for ch in 'FIZZ']
+        )
+        B = (lc.APPEND)(lc.EMPTY)(lc.BUZZ)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(B)],
+            [ord(ch) for ch in 'BUZZ']
+        )
+        nil = (lc.APPEND)(lc.EMPTY)(lc.EMPTY)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(nil)],
+            []
+        )
+        

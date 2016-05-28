@@ -200,3 +200,27 @@ P_REVERSE_STEP = (lambda f: lambda p:
 )
 P_REVERSE = (Z)(P_REVERSE_STEP)
 REVERSE = lambda l: (P_REVERSE)((PAIR)(l)(EMPTY))
+
+# APPEND - Concatenate two lists
+#
+# Start with a P_REV_APPEND which appends the reverse of the first list
+# to the second. The stepper function takes a pair [ list1, list2 ] and
+# returns [ (TAIL)(list1), (CONS) ((HEAD)(list1)) (list2) ] if list1
+# is nonempty, or list2 otherwise.
+P_REV_APPEND_STEP = lambda f: lambda p: (
+    ((IS_EMPTY)
+        ((FIRST)(p))
+        ((SECOND)(p))
+        (lambda z: (f)(
+            ((PAIR)
+                ((TAIL)((FIRST)(p)))
+                ((CONS)
+                    ((HEAD)((FIRST)(p)))
+                    ((SECOND)(p))
+                )
+            )
+        )(z))
+    )
+)
+P_REV_APPEND = (Z)(P_REV_APPEND_STEP)
+APPEND = lambda a: lambda b: (P_REV_APPEND) ((PAIR) ((REVERSE)(a)) (b))
