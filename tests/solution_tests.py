@@ -197,6 +197,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(unchurch(lc.CH_B), ord('B'))
         self.assertEqual(unchurch(lc.CH_F), ord('F'))
         self.assertEqual(unchurch(lc.CH_I), ord('I'))
+        self.assertEqual(unchurch(lc.CH_U), ord('U'))
         self.assertEqual(unchurch(lc.CH_Z), ord('Z'))
 
     def test_integer_to_string(self):
@@ -222,3 +223,21 @@ class TestSolution(unittest.TestCase):
             [ord('1'), ord('3'), ord('5')]
         )
         
+    def test_fizzbuzz_literals(self):
+        """
+        Test the FIZZ and BUZZ string literals
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZ)],
+            [ord(ch) for ch in 'FIZZ']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.BUZZ)],
+            [ord(ch) for ch in 'BUZZ']
+        )

@@ -114,13 +114,14 @@ CH_ZERO = (ADD) (FORTY) ((ADD)(FIVE)(THREE))
 CH_B = (ADD) ((ADD)(TEN)(FIFTY)) ((ADD)(ONE)(FIVE))
 CH_F = (ADD)(CH_B)(FOUR)
 CH_I = (ADD)(CH_F)(THREE)
+CH_U = (ADD) (FORTY) ((ADD)(FORTY)(FIVE))
 CH_Z = (ADD)(FORTY)(FIFTY)
 
 # Convert church numberals to "string" or list of unicode codepoints
 # representing each numeral. Note this doesn't work for zero:
 # INT_TO_STR(132) --> ["1", "3", "2"]
 
-# Step function accepts a pair [number, string] and 
+# Step function accepts a pair [number, string] and
 # returns [ number / 10, "number % 10" + string ]
 P_INT_TO_STR_STEP = ( lambda f: lambda p:
     (IS_ZERO)
@@ -129,7 +130,7 @@ P_INT_TO_STR_STEP = ( lambda f: lambda p:
         (lambda z: (f)(
             (PAIR)
                 ((DIV) ((FIRST)(p)) (TEN))
-                ((CONS) 
+                ((CONS)
                     ((ADD) ((MOD)((FIRST)(p))(TEN)) (CH_ZERO))
                     ((SECOND)(p))
                 )
@@ -137,3 +138,39 @@ P_INT_TO_STR_STEP = ( lambda f: lambda p:
 )
 P_INT_TO_STR = (Z)(P_INT_TO_STR_STEP)
 INT_TO_STR = lambda n: (P_INT_TO_STR)((PAIR)(n)(EMPTY))
+
+# string literals for 'fizz' and 'buzz'
+FIZZ = (
+    (CONS)
+        (CH_F)
+        (
+            (CONS)
+                (CH_I)
+                (
+                    (CONS)
+                        (CH_Z)
+                        (
+                            (CONS)
+                                (CH_Z)
+                                (EMPTY)
+                        )
+                )
+        )
+)
+BUZZ = (
+    (CONS)
+        (CH_B)
+        (
+            (CONS)
+                (CH_U)
+                (
+                    (CONS)
+                        (CH_Z)
+                        (
+                            (CONS)
+                                (CH_Z)
+                                (EMPTY)
+                        )
+                )
+        )
+)
