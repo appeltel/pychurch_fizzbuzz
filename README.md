@@ -110,12 +110,32 @@ blockquoted module docstring.
 
 ## My Solution
 
-TODO: Add links to code, explain the printer and code structure.
+The [solution](fizzbuzz/solution.py) is just under 300 lines with comments,
+and builds up a small language using only lambda expressions with
+just enough functionality to produce a fizzbuzz "string".
+
+In order to actually print this Church List of Church Numerals representing
+the Unicode codepoints of fizzbuzz output, a
+[printer utility](fizzbuzz/printer.py) is provided, which has a
+`church_print(...)` function that takes as arguments a Church List as well
+as lambda abstractions to obtain the head and tail of the list and a
+predicate to determine if the list is empty. This was independently tested
+against various list implementations.
+
+Finally, a python setup script and
+[command line utility](fizzbuzz/cli.py) were added to allow a simple
+command `fizzbuzz` to perform fizzbuzz up to 100, or
+`fizzbuzz` to perform fizzbuzz to the specified integer.
+
+Surprisingly, this does not hit the relatively low python recursion limit
+of 1000 calls, although it does take nearly 5 minutes to execute fizzbuzz
+up to 100 on a modern laptop processor!
 
 So here is the solution executed on a 2.5 GHz Intel Core i7, python 3.5.1,
 OSX 10.11:
 
 ```
+$ time fizzbuss
 1 
 2 
 3 FIZZ
