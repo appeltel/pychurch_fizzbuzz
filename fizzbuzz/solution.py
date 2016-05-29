@@ -56,6 +56,16 @@ PAIR = lambda x: lambda y: lambda z: (z)(x)(y)
 FIRST = lambda p: (p)(TRUE)
 SECOND = lambda p: (p)(FALSE)
 
+# Alternate precesssor - the "Wisdom Tooth" trick.
+# I'm including this because I really like the reasoning
+# even though it's unused code.
+#
+# Create a step function that takes a pair [a, b] --> [b, b + 1]
+# Then apply it to [0,0] n-times, and pick off the first element,
+# which is n-1 !!!
+WT_STEP = lambda p: (PAIR) ((SECOND)(p)) ((SUCC)((SECOND)(p)))
+WT_PRED = lambda n: (FIRST)((n)(WT_STEP)((PAIR)(ZERO)(ZERO)))
+
 # list encoding using two pairs to allow empty lists
 # [ <empty list boolean>, [ head, tail ] ]
 EMPTY = (PAIR)(TRUE)(TRUE)

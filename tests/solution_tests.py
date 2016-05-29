@@ -85,6 +85,14 @@ class TestSolution(unittest.TestCase):
         self.assertFalse(lc.IS_ZERO(lc.ONE)(True)(False))
         self.assertFalse(lc.IS_ZERO(lc.HUNDRED)(True)(False))
 
+    def test_wisdom_tooth_predecessor(self):
+        """
+        Test the alternate "Wisdom Tooth" predecessor function.
+        """
+        self.assertEqual(unchurch(lc.WT_PRED(lc.FIVE)), 4)
+        self.assertEqual(unchurch(lc.WT_PRED(lc.ONE)), 0)
+        self.assertEqual(unchurch(lc.WT_PRED(lc.ZERO)), 0)
+
     def test_list_construction(self):
         """
         Test CONS, EMPTY, IS_EMPTY, HEAD, TAIL
