@@ -341,3 +341,31 @@ class TestSolution(unittest.TestCase):
             [unchurch(elem) for elem in to_pylist(nil)],
             []
         )
+
+    def test_fizzbuzz_single_number(self):
+        """
+        Test the FIZZBUZZ_NUM function
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.TEN))],
+            [ord(ch) for ch in '10 BUZZ\n']
+        )
+        nine = lc.ADD(lc.FOUR)(lc.FIVE)
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(nine))],
+            [ord(ch) for ch in '9 FIZZ\n']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.THIRTY))],
+            [ord(ch) for ch in '30 FIZZBUZZ\n']
+        )
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.FOUR))],
+            [ord(ch) for ch in '4 \n']
+        )

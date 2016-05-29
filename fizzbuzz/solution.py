@@ -236,3 +236,21 @@ BUZZ = (
 # if divisible by 3(5), or an empty list otherwise.
 TRY_FIZZ = lambda n: ((IS_ZERO) ((MOD)(n)(THREE)) (FIZZ) (EMPTY))
 TRY_BUZZ = lambda n: ((IS_ZERO) ((MOD)(n)(FIVE)) (BUZZ) (EMPTY))
+
+# FIZZBUZZ_NUM - return a proper fizzbuzz string for a given number,
+# i.e. FUZZBUZZ_NUM(TEN) --> [1, 0, ' ', B, U, Z, Z, '\n']
+FIZZBUZZ_NUM = lambda n: (
+    ((APPEND)
+        ((INT_TO_STR)(n))
+        ((APPEND)
+            ((CONS)(CH_SPACE)(EMPTY))
+            ((APPEND)
+                ((TRY_FIZZ)(n))
+                ((APPEND)
+                    ((TRY_BUZZ)(n))
+                    ((CONS)(CH_NEWLINE)(EMPTY))
+                )
+            )
+        )
+    )
+)
