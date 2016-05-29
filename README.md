@@ -135,7 +135,7 @@ So here is the solution executed on a 2.5 GHz Intel Core i7, python 3.5.1,
 OSX 10.11:
 
 ```
-$ time fizzbuss
+$ time fizzbuzz
 1 
 2 
 3 FIZZ
@@ -152,7 +152,7 @@ $ time fizzbuss
 14 
 15 FIZZBUZZ
 16 
-...
+... snip ...
 98 
 99 FIZZ
 100 BUZZ
