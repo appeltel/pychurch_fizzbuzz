@@ -1,7 +1,7 @@
 """
 _solution_
 
-(When completed...) This module defines the lambda abstraction
+This module defines the lambda abstraction
 FIZZBUZZ which is a list of church encoded numerals each
 representing a unicode codepoint which if interpreted and
 printed to a device would present the solution to the
@@ -254,3 +254,29 @@ FIZZBUZZ_NUM = lambda n: (
         )
     )
 )
+
+# FIZZBUZZ_UPTO - return a fizzbuzz list for numbers 1 through n
+#
+# Step function takes a pair [num, list] and returns a pair
+# [ PRED(num), APPEND(FIZZBUZZ_NUM(num))(list) ]  unless num is zero,
+# in which case list is returned
+P_FIZZBUZZ_UPTO_STEP = lambda f: lambda p: (
+    ((IS_ZERO)
+        ((FIRST)(p))
+        ((SECOND)(p))
+        (lambda z: (f)(
+            ((PAIR)
+                ((PRED) ((FIRST)(p)))
+                ((APPEND)
+                    ((FIZZBUZZ_NUM) ((FIRST)(p)))
+                    ((SECOND)(p))
+                )
+            )
+        )(z))
+    )
+)
+P_FIZZBUZZ_UPTO = (Z)(P_FIZZBUZZ_UPTO_STEP)
+FIZZBUZZ_UPTO = lambda n: (P_FIZZBUZZ_UPTO) ((PAIR)(n)(EMPTY))
+
+# TADA!
+FIZZBUZZ = (FIZZBUZZ_UPTO)(HUNDRED)

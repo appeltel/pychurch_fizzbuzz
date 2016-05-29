@@ -369,3 +369,19 @@ class TestSolution(unittest.TestCase):
             [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.FOUR))],
             [ord(ch) for ch in '4 \n']
         )
+
+    def test_fizzbuzz_upto(self):
+        """
+        Test the FIZZBUZZ_UPTO function
+        """
+        to_pylist = partial(
+            unchurch_list,
+            head=lc.HEAD,
+            tail=lc.TAIL,
+            isnil=lc.IS_EMPTY
+        )
+        expected = '1 \n2 \n3 FIZZ\n4 \n5 BUZZ\n'
+        self.assertEqual(
+            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_UPTO(lc.FIVE))],
+            [ord(ch) for ch in expected]
+        )
