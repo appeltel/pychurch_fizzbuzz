@@ -19,6 +19,44 @@ from fizzbuzz.printer import (
 
 class TestSolution(unittest.TestCase):
 
+    def setUp(self):
+        """
+        Define a church printer partial that prints to string
+        using the HEAD, TAIL, and IS_EMPTY abstractions if
+        available or raises if they are not defined in the
+        solution module.
+
+        Define a similar function to
+        unchurch lists of Church numerals into python lists
+        of python integers.
+        """
+        def raise_thunk(*args, **kwargs):
+            raise AttributeError(
+                'Error: HEAD, TAIL, and/or IS_EMPTY not found in solution'
+            )
+
+        try:    
+            self.cprint = partial(
+                church_print,
+                head=lc.HEAD,
+                tail=lc.TAIL,
+                isnil=lc.IS_EMPTY,
+                to_str=True
+            )
+        except AttributeError:
+            self.cprint = raise_thunk
+
+        try:
+            uc_list = partial(
+                unchurch_list,
+                head=lc.HEAD,
+                tail=lc.TAIL,
+                isnil=lc.IS_EMPTY
+            )
+            self.plist = lambda x: [unchurch(elem) for elem in uc_list(x)]
+        except AttributeError:
+            self.plist = raise_thunk
+    
     def test_basic_math(self):
         """
         Test some of the basic numerals, SUCC, ADD, and MULT functions.
@@ -106,16 +144,7 @@ class TestSolution(unittest.TestCase):
 
         two_elem = lc.CONS(lc.TWO)(one_elem)
         three_elem = lc.CONS(lc.THREE)(two_elem)
-        pylist = unchurch_list(
-            three_elem,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in pylist],
-            [3, 2, 1]
-        )
+        self.assertEqual(self.plist(three_elem), [3, 2, 1])
 
     def test_z_combinator(self):
         """
@@ -212,184 +241,84 @@ class TestSolution(unittest.TestCase):
         """
         Tests for the INT_TO_STR function.
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
-
         forty_two = lc.ADD(lc.FORTY)(lc.TWO)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.INT_TO_STR(forty_two))],
-            [ord('4'), ord('2')]
-        )
+        self.assertEqual(self.cprint(lc.INT_TO_STR(forty_two)), '42')
 
         one_thirty_five = lc.ADD(lc.HUNDRED)(lc.ADD(lc.THIRTY)(lc.FIVE))
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.INT_TO_STR(one_thirty_five))],
-            [ord('1'), ord('3'), ord('5')]
-        )
+        self.assertEqual(self.cprint(lc.INT_TO_STR(one_thirty_five)), '135')
         
     def test_fizzbuzz_literals(self):
         """
         Test the FIZZ and BUZZ string literals
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZ)],
-            [ord(ch) for ch in 'FIZZ']
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.BUZZ)],
-            [ord(ch) for ch in 'BUZZ']
-        )
+        self.assertEqual(self.cprint(lc.FIZZ), 'FIZZ')
+        self.assertEqual(self.cprint(lc.BUZZ), 'BUZZ')
 
     def test_try_fizz_and_buzz(self):
         """
         Test the TRY_FIZZ and TRY_BUZZ functions
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.THIRTY))],
-            [ord(ch) for ch in 'FIZZ']
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.THIRTY))],
-            [ord(ch) for ch in 'BUZZ']
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.TWENTY))],
-            []
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.TWENTY))],
-            [ord(ch) for ch in 'BUZZ']
-        )
+        self.assertEqual(self.cprint(lc.TRY_FIZZ(lc.THIRTY)), 'FIZZ')
+        self.assertEqual(self.cprint(lc.TRY_BUZZ(lc.THIRTY)), 'BUZZ')
+
+        self.assertEqual(self.cprint(lc.TRY_FIZZ(lc.TWENTY)), '')
+        self.assertEqual(self.cprint(lc.TRY_BUZZ(lc.TWENTY)), 'BUZZ')
+
         NINE = lc.ADD(lc.FOUR)(lc.FIVE) 
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(NINE))],
-            [ord(ch) for ch in 'FIZZ']
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(NINE))],
-            []
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_FIZZ(lc.TWO))],
-            []
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.TRY_BUZZ(lc.TWO))],
-            []
-        )
+        self.assertEqual(self.cprint(lc.TRY_FIZZ(NINE)), 'FIZZ')
+        self.assertEqual(self.cprint(lc.TRY_BUZZ(NINE)), '')
+
+        self.assertEqual(self.cprint(lc.TRY_FIZZ(lc.TWO)), '')
+        self.assertEqual(self.cprint(lc.TRY_BUZZ(lc.TWO)), '')
 
     def test_list_reverse(self):
         """
         Test the REVERSE function
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
         ZZIF = lc.REVERSE(lc.FIZZ)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(ZZIF)],
-            [ord(ch) for ch in 'ZZIF']
-        )
+        self.assertEqual(self.cprint(lc.REVERSE(lc.FIZZ)), 'ZZIF')
+
         Z = (lc.CONS)(lc.CH_Z)(lc.EMPTY)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.REVERSE(Z))],
-            [ord('Z')]
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.REVERSE(lc.EMPTY))],
-            []
-        )
+        self.assertEqual(self.cprint(Z), 'Z')
+
+        
+        self.assertEqual(self.cprint(lc.EMPTY), '')
 
     def test_list_append(self):
         """
         Test the APPEND function
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
         FB = (lc.APPEND)(lc.FIZZ)(lc.BUZZ)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(FB)],
-            [ord(ch) for ch in 'FIZZBUZZ']
-        )
+        self.assertEqual(self.cprint(FB), 'FIZZBUZZ')
+
         F = (lc.APPEND)(lc.FIZZ)(lc.EMPTY)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(F)],
-            [ord(ch) for ch in 'FIZZ']
-        )
+        self.assertEqual(self.cprint(F), 'FIZZ')
+
         B = (lc.APPEND)(lc.EMPTY)(lc.BUZZ)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(B)],
-            [ord(ch) for ch in 'BUZZ']
-        )
+        self.assertEqual(self.cprint(B), 'BUZZ')
+
         nil = (lc.APPEND)(lc.EMPTY)(lc.EMPTY)
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(nil)],
-            []
-        )
+        self.assertEqual(self.cprint(nil), '')
 
     def test_fizzbuzz_single_number(self):
         """
         Test the FIZZBUZZ_NUM function
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.TEN))],
-            [ord(ch) for ch in '10 BUZZ\n']
-        )
+        self.assertEqual(self.cprint(lc.FIZZBUZZ_NUM(lc.TEN)), '10 BUZZ\n')
+
         nine = lc.ADD(lc.FOUR)(lc.FIVE)
+        self.assertEqual(self.cprint(lc.FIZZBUZZ_NUM(nine)), '9 FIZZ\n')
+
         self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(nine))],
-            [ord(ch) for ch in '9 FIZZ\n']
+            self.cprint(lc.FIZZBUZZ_NUM(lc.THIRTY)),
+            '30 FIZZBUZZ\n'
         )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.THIRTY))],
-            [ord(ch) for ch in '30 FIZZBUZZ\n']
-        )
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_NUM(lc.FOUR))],
-            [ord(ch) for ch in '4 \n']
-        )
+
+        self.assertEqual(self.cprint(lc.FIZZBUZZ_NUM(lc.FOUR)), '4 \n')
 
     def test_fizzbuzz_upto(self):
         """
         Test the FIZZBUZZ_UPTO function
         """
-        to_pylist = partial(
-            unchurch_list,
-            head=lc.HEAD,
-            tail=lc.TAIL,
-            isnil=lc.IS_EMPTY
-        )
         expected = '1 \n2 \n3 FIZZ\n4 \n5 BUZZ\n'
-        self.assertEqual(
-            [unchurch(elem) for elem in to_pylist(lc.FIZZBUZZ_UPTO(lc.FIVE))],
-            [ord(ch) for ch in expected]
-        )
+        self.assertEqual(self.cprint(lc.FIZZBUZZ_UPTO(lc.FIVE)), expected)
