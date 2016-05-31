@@ -26,13 +26,17 @@ def unchurch_list(church_list, head=None, tail=None, isnil=None):
     return py_list
 
 
-def church_print(church_list, head=None, tail=None, isnil=None):
+def church_print(church_list, head=None, tail=None, isnil=None, to_str=False):
     """
-    Print a given church list of unicode codepoints to stdout
+    Print a given church list of unicode codepoints to stdout or to a
+    python string.
     """
     pylist = [
         chr(unchurch(item)) for item in
          unchurch_list(church_list, head=head, tail=tail, isnil=isnil)
     ]
-    for character in pylist:
-        sys.stdout.write(character)
+    if to_str:
+        return ''.join(pylist)
+    else:
+        for character in pylist:
+            sys.stdout.write(character)

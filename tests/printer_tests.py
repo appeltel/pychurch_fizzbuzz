@@ -105,6 +105,27 @@ class TestPrinter(unittest.TestCase):
         
         self.assertEqual(self.mock_stdout.getvalue(), 'F 0\n')
 
+    def test_church_print_implementation_a_to_str(self):
+        """
+        Test the church print function using list implementation a
+        defined in this module, printing to string.
+        """
+        impl = self._list_implementation_a()
+        a0 = impl.cons(self.ch_newline)(impl.nil)
+        a1 = impl.cons(self.ch_0)(a0)
+        a2 = impl.cons(self.ch_space)(a1)
+        a3 = impl.cons(self.ch_F)(a2)
+
+        teststring = church_print(
+            a3,
+            head=impl.head,
+            tail=impl.tail,
+            isnil=impl.isnil,
+            to_str=True
+        )
+        
+        self.assertEqual(teststring, 'F 0\n')
+
     def _list_implementation_a(self):
         """
         Return a Church list implementation for using in tests
